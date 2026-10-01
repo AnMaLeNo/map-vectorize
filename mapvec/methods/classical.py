@@ -20,6 +20,7 @@ DEFAULTS = dict(
     fill_open_r=3,         # épaisseur minimale d'un aplat pour compter comme salle
     hole_area=1500,        # trous bouchés (textes, symboles posés dans une galerie)
     min_area=600,          # fragments retirés
+    text_halo=1,           # les bords anticrénelés du texte sont gris neutre : on les exclut des murs
 )
 
 
@@ -50,7 +51,8 @@ def segment(img, **kw):
     b = lab[..., 2].astype(np.int16) - 128
     chroma = np.hypot(a, b)
     text = (L < 150) & (b < p['text_b'])
-    wall = (L >= p['wall_L'][0]) & (L < p['wall_L'][1]) & (chroma < p['max_chroma']) & ~text
+    text_zone = cv2.dilate(text.astype(np.uint8), disk(p['text_halo'])) > 0 if p['text_halo'] else text
+    wall = (L >= p['wall_L'][0]) & (L < p['wall_L'][1]) & (chroma < p['max_chroma']) & ~text_zone
     corridors = cv2.morphologyEx(wall.astype(np.uint8), cv2.MORPH_CLOSE, disk(p['close_r'])) > 0
     fill = (L >= p['fill_L'][0]) & (L < p['fill_L'][1]) & (np.abs(a) <= p['fill_max_ab']) & (np.abs(b) <= p['fill_max_ab'])
     rooms = cv2.morphologyEx(fill.astype(np.uint8), cv2.MORPH_OPEN, disk(p['fill_open_r'])) > 0
