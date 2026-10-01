@@ -1,0 +1,34 @@
+{
+ "vdg_dense": [
+  1790,
+  2893
+ ],
+ "carrefour_morts": [
+  3209,
+  1884
+ ],
+ "nord_rues": [
+  3524,
+  528
+ ],
+ "ouest_vaugirard": [
+  434,
+  2105
+ ],
+ "montsouris_grille": [
+  3587,
+  4533
+ ],
+ "est_port_royal": [
+  4218,
+  2010
+ ],
+ "alesia": [
+  2578,
+  3965
+ ],
+ "observatoire": [
+  4533,
+  907
+ ]
+}

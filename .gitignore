@@ -1,5 +1,8 @@
 .venv/
-data/
+data/*
+!data/labels/
+!data/eval_tiles.json
+data/labels/*.jpg
 out/
 __pycache__/
 *.pyc
